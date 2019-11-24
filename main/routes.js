@@ -62,6 +62,19 @@ router.put("/api/put/post", (req, res, next) => {
   );
 });
 
+router.get("/api/get/userposts", (req, res, next) => {
+  const user_id = req.query.user_id;
+  console.log(user_id);
+  pool.query(
+    `SELECT * FROM posts
+                WHERE user_id=$1`,
+    [user_id],
+    (q_err, q_res) => {
+      res.json(q_res.rows);
+    }
+  );
+});
+
 router.delete("/api/delete/post", (req, res, next) => {
   const post_id = req.body.post_id;
   pool.query(`DELETE FROM posts WHERE pid = $1`, [post_id], (q_err, q_res) => {
