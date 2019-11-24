@@ -84,14 +84,10 @@ router.delete("/api/delete/post", (req, res, next) => {
 });
 
 router.post("/api/posts/userprofiletodb", (req, res, next) => {
-  const values = [
-    req.body.profile.nickname,
-    req.body.profile.email,
-    req.body.profile.email_verified
-  ];
+  const values = [req.body.profile.nickname, req.body.profile.email];
   pool.query(
     `INSERT INTO users(username, email, email_verified, date_created)
-                VALUES($1, $2, $3, NOW())
+                VALUES($1, $2, NOW())
                 ON CONFLICT DO NOTHING`,
     values,
     (q_err, q_res) => {
