@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var pool = require("./db");
+var cors = require("cors");
+router.use(cors());
 
 router.get("/api/get/allposts", (req, res, next) => {
   pool.query(
@@ -83,10 +85,10 @@ router.delete("/api/delete/post", (req, res, next) => {
   });
 });
 
-router.post("/api/posts/userprofiletodb", (req, res, next) => {
+router.post("/api/post/userprofiletodb", (req, res, next) => {
   const values = [req.body.profile.nickname, req.body.profile.email];
   pool.query(
-    `INSERT INTO users(username, email, email_verified, date_created)
+    `INSERT INTO users(username, email, date_created)
                 VALUES($1, $2, NOW())
                 ON CONFLICT DO NOTHING`,
     values,
