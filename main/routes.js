@@ -107,4 +107,14 @@ router.get("/api/get/userprofilefromdb", (req, res, next) => {
   );
 });
 
+router.get("/api/get/allusers", (req, res, next) => {
+  pool.query(
+    `SELECT * FROM users 
+    ORDER BY date_created DESC`,
+    (q_err, q_res) => {
+      res.json(q_res.rows);
+    }
+  );
+});
+
 module.exports = router;
