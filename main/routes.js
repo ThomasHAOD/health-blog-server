@@ -94,27 +94,6 @@ router.get("/api/get/userposts", (req, res, next) => {
   );
 });
 
-router.delete("/api/delete/post", (req, res, next) => {
-  const post_id = req.body.post_id;
-  pool.query(`DELETE FROM posts WHERE pid = $1`, [post_id], (q_err, q_res) => {
-    res.json(q_res.rows);
-    console.log(q_err);
-  });
-});
-
-router.post("/api/post/userprofiletodb", (req, res, next) => {
-  const values = [req.body.profile.nickname, req.body.profile.email];
-  pool.query(
-    `INSERT INTO users(username, email, date_created)
-                VALUES($1, $2, NOW())
-                ON CONFLICT DO NOTHING`,
-    values,
-    (q_err, q_res) => {
-      res.json(q_res.rows);
-    }
-  );
-});
-
 router.get("/api/get/userprofilefromdb", (req, res, next) => {
   const email = req.query.email;
   console.log(email);
